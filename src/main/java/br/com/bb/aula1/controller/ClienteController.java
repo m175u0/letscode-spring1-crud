@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +49,7 @@ public class ClienteController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> criarCliente(@Valid @RequestBody Cliente cliente) {
         try {
             Cliente clienteAux = baseClientes.save(new Cliente(cliente.getName(), cliente.getAge(), cliente.getVAT(), cliente.getEmail()));
             return new ResponseEntity<>(clienteAux, HttpStatus.CREATED);
@@ -65,4 +67,5 @@ public class ClienteController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
